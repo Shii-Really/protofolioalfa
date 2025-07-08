@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portofolio Alfaa Gantengg</title>
+  <style>
+    html, {
+  scroll-behavior: smooth;
+}
+
+body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Courier New', monospace;
+      background: black;
+      color: #00ff00;
+      overflow-x: hidden;
+    }
+
+    canvas#matrix {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .intro {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 2rem;
+      text-align: center;
+      background-color: rgba(0, 0, 0, 0.85);
+      transition: opacity 1s ease;
+    }
+
+    .typing-box {
+      max-width: 90%;
+      padding: 1rem 2rem;
+      border: 1px solid #00ff00;
+      background-color: rgba(0, 0, 0, 0.5);
+      word-wrap: break-word;
+      white-space: pre-wrap;
+    }
+
+    .typing-text {
+      display: inline-block;
+      font-size: 1.2rem;
+      line-height: 1.5;
+    }
+
+    .blinking-cursor {
+      display: inline-block;
+      width: 10px;
+      background-color: #00ff00;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+
+    .intro button {
+      margin-top: 2rem;
+      padding: 1rem 2rem;
+      background: #00ff00;
+      border: none;
+      color: black;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .intro button:hover {
+      background: #00cc00;
+    }
+
+    #konten {
+      display: none;
+      opacity: 0;
+      transition: opacity 1s ease;
+      background: #0f172a;
+      color: white;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    nav {
+      text-align: center;
+      padding: 1rem;
+      background: #1e293b;
+    }
+
+    nav a {
+      margin: 0 1rem;
+      color: #10b981;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 2rem;
+      gap: 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .left {
+      flex: 1;
+      min-width: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .left img {
+      max-width: 100%;
+      border-radius: 1.5rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+      transition: transform 0.3s ease;
+    }
+
+    .left img:hover {
+      transform: scale(1.05);
+    }
+
+    .right {
+      flex: 2;
+      padding: 1rem;
+    }
+
+    h1 span {
+      color: #10b981;
+    }
+
+    .stats {
+      display: flex;
+      gap: 2rem;
+      margin: 1.5rem 0;
+    }
+
+    .stats div h2 {
+      font-size: 2rem;
+      color: #10b981;
+    }
+
+    .skills, .timeline, .contact {
+      margin-top: 2rem;
+    }
+
+    .bar {
+      background: #374151;
+      height: 20px;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .bar span {
+      display: block;
+      height: 100%;
+      background-color: #10b981;
+    }
+
+    .timeline-item {
+      background: #1f2937;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 10px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s forwards;
+    }
+
+    .timeline-item:hover {
+      background: #2d3748;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .contact a {
+      color: #10b981;
+      text-decoration: none;
+    }
+
+    .contact a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #0f172a;
+      color: #94a3b8;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .stats {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="matrix"></canvas>
+
+  <div class="intro" id="intro">
+    <div class="typing-box">
+      <span class="typing-text" id="typingText"></span><span class="blinking-cursor"></span>
+    </div>
+    <button onclick="mulaiPortofolio()">Masuk ke Portofolio</button>
+  </div>
+
+  <audio id="musik" loop>
+    <source src="https://files.catbox.moe/4wesd6.mp3" type="audio/mpeg">
+  </audio>
+
+  <div id="konten">
+    <nav>
+      <a href="#skills">Skills</a>
+      <a href="#timeline">Timeline</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="container">
+      <div class="left">
+        <img src="https://files.catbox.moe/xe11zs.jpg" alt="Foto Alfaa Rizkii">
+      </div>
+      <div class="right">
+        <h1>Hi, I'm <span>Alfaa Rizkii</span>, a Web Developer.</h1>
+        <p>Hi, welcome to the Alfa Rizki portfolio website, I use this website for information about myself, if you want to know about me, please contact my number directly.</p>
+
+        <div class="stats">
+          <div><h2>3+</h2><p>Projects Coding</p></div>
+          <div><h2>20+</h2><p>Things i like</p></div>
+        </div>
+
+        <div class="skills" id="skills">
+          <h2>My Skills</h2>
+          <p>HTML</p><div class="bar"><span style="width: 50%"></span></div>
+          <p>CSS</p><div class="bar"><span style="width: 45%"></span></div>
+          <p>JavaScript</p><div class="bar"><span style="width: 30%"></span></div>
+          <p>hadroh</p><div class="bar"><span style="width: 65%"></span></div>
+          <p>Editing</p><div class="bar"><span style="width: 60%"></span></div>
+          <p>Game</p><div class="bar"><span style="width: 75%"></span></div>
+        </div>
+
+        <div class="timeline" id="timeline">
+          <h2>My Timeline</h2>
+          <div class="timeline-item">
+            <strong>HTML - 2025</strong>
+            <p>Saya pertama kali mengenal html dikarnakan penasaran dan sekarang saya ingin mendalami ilmu tentang html dikarnakan menarik dan mudah</p>
+          </div>
+          <div class="timeline-item">
+            <strong>CSS - 2025</strong>
+            <p>Setelah mengetahui html ada juga css yang fungsi nya untuk memperbagus website yang kalian buat dengan css website kalian akan terlihat bagus, sayang kurang mahir di bidang css.</p>
+          </div>
+          <div class="timeline-item">
+            <strong>JavaScript - 2025</strong>
+            <p>Saya mengetahui JavaScript dikarnakan bot wa, saya mulai mempelajari JavaScript dikarnakan saya ingin membuat bot wa buatan saya sendiri.</p>
+          </div>
+          <div class="timeline-item">
+            <strong>Hadroh - 2023</strong>
+            <p>Saya mengetahui hadroh semenjak saya masuk ke pondok pesantren, saya ingin mempelajari teknik dasar hadroh dikarnakan seru dan keren.</p>
+            </div>
+          <div class="timeline-item">
+            <strong>Editing - 2020</strong>
+            <p>Saya lumayan mahir di bidang editing dikarnakan saya menyukai logo-logo yang keren, saya cukup mempelajari dasar-dasar editing namun sekarang saya sudah tidak punya minat untuk editing.</p>
+            </div>
+          <div class="timeline-item">
+            <strong>Game - 2018</strong>
+            <p>Saya cukup mahir di dunia game dikarnakan game itu permainan yang sangat seru</p>
+          </div>
+        </div>
+
+        <div class="contact" id="contact">
+          <h2>Contact Me</h2>
+          <p>Email: <a href="mailto:riskii19042024@gmail.com">riskii19042024@gmail.com</a></p>
+          <p>WhatsApp: <a href="https://wa.me/6283133041554">+62 831-3304-1554</a></p>
+          <p>Telegram: <a href="https://t.me/ALFAAOFFC" target="_blank">@ALFAAOFFC</a></p>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      © 2025 Alfaa Rizkii. All rights reserved.
+    </footer>
+  </div>
+
+  <script>
+    // Typing effect
+    const teks = "Welcome to the Alfa Rizki portfolio website,\npress the button below to continue";
+    let i = 0;
+    const speed = 40;
+    const typingTarget = document.getElementById("typingText");
+
+    function typeWriter() {
+      if (i < teks.length) {
+        typingTarget.textContent += teks.charAt(i);
+        i++;
+        setTimeout(typeWriter, speed);
+      }
+    }
+
+    typeWriter();
+
+    function mulaiPortofolio() {
+      const intro = document.getElementById("intro");
+      const konten = document.getElementById("konten");
+      const musik = document.getElementById("musik");
+
+      intro.style.opacity = 0;
+      setTimeout(() => {
+        intro.style.display = "none";
+        konten.style.display = "block";
+        setTimeout(() => {
+          konten.style.opacity = 1;
+          musik.play();
+        }, 100);
+      }, 1000);
+    }
+
+    // Matrix Effect
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+    const letters = "アカサタナ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops = Array.from({ length: columns }).fill(1);
+
+    function drawMatrix() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#0f0";
+      ctx.font = fontSize + "px monospace";
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    setInterval(drawMatrix, 33);
+  </script>
+</body>
+</html>
